@@ -111,7 +111,7 @@ class TestLinearizer(unittest.TestCase):
     assert len(ranges) == 1 # NOTE: it collapses now
     
   class TestLinearizer(unittest.TestCase):
-  def test_avg_pool3d_linearizer(self):
+    def test_avg_pool3d_linearizer(self):
     x = Tensor.rand(1, 1, 4, 4, 4).realize()
     out = x.avg_pool3d(kernel_size=(2,2,2), stride=2, padding=0)
     import torch
