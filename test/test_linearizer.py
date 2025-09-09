@@ -110,14 +110,14 @@ class TestLinearizer(unittest.TestCase):
     ranges = [i for i,u in enumerate(uops) if u.op is Ops.RANGE]
     assert len(ranges) == 1 # NOTE: it collapses now
 
-def test_avg_pool3d_linearizer(self):
-  x = Tensor.rand(1, 1, 4, 4, 4).realize()
-  out = x.avg_pool3d(kernel_size=(2,2,2), stride=2, padding=0)
-  import torch
-  expected = torch.nn.functional.avg_pool3d(torch.tensor(x.numpy()), kernel_size=(2,2,2), stride=2, padding=0).numpy()
-  ast = helper_linearizer_opt(out, wanna_output=[expected])
-  uops = get_program(ast, opts=[]).uops
-  assert any(u.op is Ops.REDUCE_AXIS for u in uops), "Expected REDUCE_AXIS in 3D pooling"
+ def test_avg_pool3d_linearizer(self):
+    x = Tensor.rand(1, 1, 4, 4, 4).realize()
+    out = x.avg_pool3d(kernel_size=(2,2,2), stride=2, padding=0)
+    import torch
+    expected = torch.nn.functional.avg_pool3d(torch.tensor(x.numpy()), kernel_size=(2,2,2), stride=2, padding=0).numpy()
+    ast = helper_linearizer_opt(out, wanna_output=[expected])
+    uops = get_program(ast, opts=[]).uops
+    assert any(u.op is Ops.REDUCE_AXIS for u in uops), "Expected REDUCE_AXIS in 3D pooling"
 
   def test_load_dedup(self):
     # for different leaves in the AST, the same loads may occur.
