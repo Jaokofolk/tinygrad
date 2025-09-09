@@ -120,7 +120,7 @@ class TestLinearizer(unittest.TestCase):
     uops = get_program(ast, opts=[]).uops
     assert any(u.op is Ops.REDUCE_AXIS for u in uops), "Expected REDUCE_AXIS in 3D pooling"
 
-   def test_load_dedup(self):
+  def test_load_dedup(self):
     # for different leaves in the AST, the same loads may occur.
 
     a = Tensor.randn(4).realize()
